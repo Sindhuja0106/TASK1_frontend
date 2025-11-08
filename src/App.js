@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { CloudUpload } from "lucide-react";
 
-const API_BASE = "http://localhost:8000"; // Change this to your deployed backend URL
+const API_BASE = "https://backend-jqim.onrender.com"; // Change this to your deployed backend URL
 
 function App() {
   const [file, setFile] = useState(null);
