@@ -1,70 +1,138 @@
-# Getting Started with Create React App
+#  TASK1 — React Frontend for FastAPI + AWS S3 File Uploader
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Live Frontend:** [https://effervescent-frangipane-72b1dc.netlify.app](https://effervescent-frangipane-72b1dc.netlify.app)  
+**Backend (FastAPI):** [https://github.com/Sindhuja0106/backend](https://github.com/Sindhuja0106/backend)
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+##  Overview
 
-### `npm start`
+**TASK1 Frontend** is a React-based web application that allows users to upload files directly to an **Amazon S3 bucket** through a **FastAPI backend**.  
+The **frontend** handles the user interface and file input, while the **backend** uses `boto3` (AWS SDK for Python) to communicate securely with S3 for file storage.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tech Stack
 
-### `npm test`
+| Layer | Technology |
+|--------|-------------|
+| **Frontend** | React.js (Functional Components, Hooks) |
+| **Backend API** | FastAPI (Python) |
+| **AWS SDK** | boto3 |
+| **Cloud Storage** | Amazon S3 |
+| **Deployment** | Netlify (Frontend) + Render (Backend) |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Features
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+✅ Upload files to AWS S3 through FastAPI backend  
+✅ Real-time upload progress and success messages  
+✅ Secure AWS communication using **boto3**  
+✅ Simple, responsive, and lightweight UI  
+✅ CORS-enabled backend for seamless frontend communication  
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🧭 Project Structure
+TASK1/
+│
+├── backend/
+│   ├── __pycache__/
+│   ├── .ebextensions/         
+│   ├── .env                  
+│   ├── app.py               
+│   ├── requirements.txt
+│   └── Procfile                # For deployment (Render / Elastic Beanstalk)
+│
+├── frontend/
+│   ├── build/
+│   ├── node_modules/
+│   ├── public/
+│   ├── src/
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── .gitignore
+│   └── README.md
+│
+├── .gitignore
+├── requirements.txt
+└── README.md
 
-### `npm run eject`
+## Setup Instructions
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 1. Clone the Repository
+bash
+git clone https://github.com/Sindhuja0106/TASK1_frontend.git
+cd TASK1
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Backend Setup (FastAPI + boto3)
+cd backend
+python -m venv venv
+venv\Scripts\activate     (on Windows)
+pip install -r requirements.txt
+uvicorn app:app --reload
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+### Create a .env file inside the backend/ directory:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+AWS_ACCESS_KEY_ID=your_key_here
+AWS_SECRET_ACCESS_KEY=your_secret_here
+AWS_REGION=eu-north-1
+S3_BUCKET=file-upload-bucket-task1
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Frontend Setup (React)
+cd frontend
+npm install
+npm start
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Open http://localhost:3000
 
-### Analyzing the Bundle Size
+### Update your backend URL in:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+frontend/src/services/api.js
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Example:
 
-### Advanced Configuration
+const API_BASE_URL = "https://task1-backend-fastapi.onrender.com/upload";
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+ ### Deployment
+Frontend:
 
-### Deployment
+Deployed via Netlify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Build with npm run build
 
-### `npm run build` fails to minify
+Live Demo: https://effervescent-frangipane-72b1dc.netlify.app
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Backend:
+
+ ### Deployed via Render 
+
+Configured to read environment variables and handle uploads securely.
+
+### Workflow Summary
+
+User uploads a file using the React frontend.
+
+The frontend sends the file to FastAPI via a POST request.
+
+FastAPI uses boto3 to upload the file to the configured AWS S3 bucket.
+
+The response is sent back to the frontend with success/failure status.
+
+###  Future Enhancements
+
+Support multiple simultaneous uploads
+
+Add file history and metadata tracking
+
+Implement JWT-based authentication
+
+Integrate drag-and-drop uploads
+
+Add download and delete functionality
+
